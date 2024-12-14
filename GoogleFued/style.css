@@ -1,0 +1,41 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #000000;
+    text-align: center;
+    height: 100vh; /* Ensure body takes up full viewport height */
+    display: flex; /* Use flexbox for centering */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    margin: 0; /* Remove default margin */
+}
+
+.container {
+    max-width: 600px;
+    width: 100%; /* Make it responsive */
+    padding: 20px;
+    background: #d735ff;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgb(255, 255, 255); /* Add shadow */
+    text-align: center; /* Center text inside the container */
+}
+
+h1 {
+    color: #333;
+}
+
+#userInput {
+    padding: 10px;
+    width: 80%; /* Input field width */
+    margin: 10px 0;
+}
+
+#submit, #next {
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+#timer {
+    font-size: 20px;
+    color: red;
+}
