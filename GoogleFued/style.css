@@ -2,21 +2,21 @@ body {
     font-family: Arial, sans-serif;
     background-color: #000000;
     text-align: center;
-    height: 100vh; /* Ensure body takes up full viewport height */
-    display: flex; /* Use flexbox for centering */
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    margin: 0; /* Remove default margin */
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
 }
 
 .container {
     max-width: 600px;
-    width: 100%; /* Make it responsive */
+    width: 100%;
     padding: 20px;
     background: #d735ff;
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 4px 20px rgb(255, 255, 255); /* Add shadow */
-    text-align: center; /* Center text inside the container */
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgb(255, 255, 255);
+    text-align: center;
 }
 
 h1 {
@@ -25,17 +25,87 @@ h1 {
 
 #userInput {
     padding: 10px;
-    width: 80%; /* Input field width */
+    width: 80%;
     margin: 10px 0;
 }
 
 #submit, #next {
-    padding: 10px 20px;
-    margin: 5px;
+    padding: 12px 24px;
+    margin: 10px;
+    border: none;
+    border-radius: 8px;
+    background-color: #6a00ff;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
     cursor: pointer;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#submit:hover, #next:hover {
+    background-color: #8a2be2;
+    transform: scale(1.05);
+}
+
+#submit:active, #next:active {
+    transform: scale(0.98);
 }
 
 #timer {
     font-size: 20px;
     color: red;
+}
+
+/* Table of Answers Styling */
+.answers-table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+.answers-table th, .answers-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+.answers-table th {
+    background-color: #6a00ff;
+    color: white;
+}
+#results {
+    margin-top: 20px;
+    color: #fff;
+    font-size: 16px;
+}
+
+#results ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+#results ul li {
+    background-color: #00cc88;
+    color: white;
+    margin: 5px 0;
+    padding: 8px;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease;
+}
+
+#results ul li:hover {
+    transform: scale(1.03);
+}
+
+#results p {
+    margin: 8px 0;
+    padding: 6px 12px;
+    background-color: #ff3366;
+    color: white;
+    border-radius: 4px;
+    display: inline-block;
 }

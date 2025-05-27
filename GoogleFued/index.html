@@ -11,8 +11,14 @@
         <h1>Google Feud</h1>
         <div id="prompt"></div>
         <div id="timer">Time Left: <span id="time">10</span>s</div>
-        <input type="text" id="userInput" placeholder="Type your answer here...">
-        <button id="submit">Submit</button>
+
+        <!-- Input container for hiding/showing -->
+        <div id="inputContainer">
+            <input type="text" id="userInput" placeholder="Type your answer here..." list="suggestions">
+            <datalist id="suggestions"></datalist>
+            <button id="submit">Submit</button>
+        </div>
+
         <div id="results"></div>
         <button id="next" style="display: none;">Next Question</button>
     </div>

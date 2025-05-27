@@ -64,23 +64,35 @@ const prompts = [
         answers: ["Football", "Basketball", "Tennis", "Baseball", "Soccer"]
     }
 ];
-
 let currentQuestionIndex = 0;
 let score = 0;
 let countdown;
-let timeLeft = 10; // Time allowed for each question
-let incorrectGuesses = 0; // Track incorrect guesses
+let timeLeft = 10;
+let incorrectGuesses = 0;
+let foundAnswers = [];
 
 function loadQuestion() {
     const promptElement = document.getElementById("prompt");
     const currentQuestion = prompts[currentQuestionIndex];
     promptElement.textContent = currentQuestion.question;
-    document.getElementById("results").textContent = ""; // Clear previous results
-    document.getElementById("next").style.display = "none"; // Hide next button
-    timeLeft = 10; // Reset time for the new question
-    incorrectGuesses = 0; // Reset incorrect guesses for the new question
-    document.getElementById("time").textContent = timeLeft; // Display time left
-    startTimer(); // Start the countdown
+    document.getElementById("results").textContent = "";
+    document.getElementById("next").style.display = "none";
+    document.getElementById("inputContainer").style.display = "block";
+    document.getElementById("userInput").value = "";
+    timeLeft = 10;
+    incorrectGuesses = 0;
+    foundAnswers = [];
+
+    const suggestionBox = document.getElementById("suggestions");
+    suggestionBox.innerHTML = "";
+    currentQuestion.answers.forEach(answer => {
+        const option = document.createElement("option");
+        option.value = answer;
+        suggestionBox.appendChild(option);
+    });
+
+    document.getElementById("time").textContent = timeLeft;
+    startTimer();
 }
 
 function startTimer() {
@@ -90,42 +102,60 @@ function startTimer() {
 
         if (timeLeft <= 0) {
             clearInterval(countdown);
-            document.getElementById("results").textContent = "Time's up! The correct answers were: " + prompts[currentQuestionIndex].answers.join(', ');
-            document.getElementById("next").style.display = "block"; // Show next question button
+            endRound();
         }
     }, 1000);
 }
 
 function submitAnswer() {
-    clearInterval(countdown); // Stop the timer
-    const userInput = document.getElementById("userInput").value.toLowerCase(); // Convert user input to lowercase
+    const inputElement = document.getElementById("userInput");
+    const userInput = inputElement.value.trim().toLowerCase();
+    inputElement.value = "";
+
     const currentQuestion = prompts[currentQuestionIndex];
-    const correctAnswers = currentQuestion.answers.map(answer => answer.toLowerCase()); // Convert all correct answers to lowercase
+    const correctAnswers = currentQuestion.answers.map(ans => ans.toLowerCase());
 
     if (correctAnswers.includes(userInput)) {
-        score++;
-        document.getElementById("results").textContent = `Correct! Score: ${score}`;
-        document.getElementById("next").style.display = "block"; // Show next question button
+        if (!foundAnswers.includes(userInput)) {
+            foundAnswers.push(userInput);
+            document.getElementById("results").innerHTML =
+                `✅ Correct! (${foundAnswers.length}/${correctAnswers.length})<br><ul>${foundAnswers.map(a => `<li>${a}</li>`).join('')}</ul>`;
+        } else {
+            document.getElementById("results").innerHTML += `<p>⚠️ You already found "${userInput}". Try something else!</p>`;
+        }
     } else {
         incorrectGuesses++;
-        if (incorrectGuesses < 3) {
-            document.getElementById("results").textContent = `Incorrect! You have ${3 - incorrectGuesses} attempts left. Try again!`;
-        } else {
-            document.getElementById("results").textContent = `Incorrect! You've used all your attempts. The correct answers were: ${correctAnswers.join(', ')}`;
-            document.getElementById("next").style.display = "block"; // Show next question button
-        }
+        document.getElementById("results").innerHTML += `<p>❌ Incorrect! ${3 - incorrectGuesses} attempts left.</p>`;
     }
-    
-    document.getElementById("userInput").value = ""; // Clear input field
+
+    if (foundAnswers.length === correctAnswers.length || incorrectGuesses >= 3) {
+        clearInterval(countdown);
+        endRound();
+    }
+}
+
+function endRound() {
+    const currentQuestion = prompts[currentQuestionIndex];
+    const correctAnswers = currentQuestion.answers;
+    document.getElementById("inputContainer").style.display = "none";
+    showAnswersTable(correctAnswers);
+    document.getElementById("next").style.display = "block";
+}
+
+function showAnswersTable(answers) {
+    let tableHTML = `<table class="answers-table"><thead><tr><th>Correct Answers</th></tr></thead><tbody>`;
+    answers.forEach(answer => {
+        tableHTML += `<tr><td>${answer}</td></tr>`;
+    });
+    tableHTML += `</tbody></table>`;
+    document.getElementById("results").innerHTML += tableHTML;
 }
 
 function nextQuestion() {
-    currentQuestionIndex = (currentQuestionIndex + 1) % prompts.length; // Loop through questions
+    currentQuestionIndex = (currentQuestionIndex + 1) % prompts.length;
     loadQuestion();
 }
 
 document.getElementById("submit").addEventListener("click", submitAnswer);
 document.getElementById("next").addEventListener("click", nextQuestion);
-
-// Load the first question on page load
 loadQuestion();
