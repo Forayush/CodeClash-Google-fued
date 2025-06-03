@@ -62,7 +62,7 @@ h1 {
     width: 100%;
     margin-top: 20px;
     border-collapse: collapse;
-    background-color: white;
+    background-color: rgb(50, 230, 143);
 }
 
 .answers-table th, .answers-table td {
@@ -105,7 +105,7 @@ h1 {
     margin: 8px 0;
     padding: 6px 12px;
     background-color: #ff3366;
-    color: white;
+    color: rgb(54, 230, 154);
     border-radius: 4px;
     display: inline-block;
 }
